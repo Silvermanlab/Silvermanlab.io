@@ -1,10 +1,14 @@
 <h1>Algorithms and Data Structure Artifact</h1>
 
 <h2>Artifact Description</h2>
-<p>PASTE HERE</p>
+<p>This artifact includes Project One and Project Two from CS 305, which focus on analyzing and improving the security of an existing software system. The original artifact involved identifying vulnerabilities within an application, while the enhanced version implemented solutions to address those weaknesses using secure coding practices and modern security tools.
+This artifact supports organizational decision-making by identifying risks that could impact system reliability, data integrity, and user trust, and by providing actionable improvements to mitigate those risks.
+</p>
 
 <h2>Enhancements Implemented</h2>
-<p>PASTE HERE</p>
+<p>The original system contained several critical vulnerabilities, including the lack of HTTPS communication, weak authentication mechanisms, insufficient input validation, and the absence of encryption. To enhance the artifact, I implemented multiple improvements to strengthen system security and reliability. These enhancements included configuring HTTPS using SSL certificates to secure data transmission, applying SHA-256 hashing and AES encryption to protect sensitive data, and improving input validation to prevent injection attacks and invalid data entry. I also updated outdated dependencies and utilized dependency-check tools to identify and address known vulnerabilities.
+In addition, I developed a Python-based security module to demonstrate the practical implementation of these improvements. This module incorporates hashing, encryption, and input validation, along with a simulation of secure communication to reflect the transition from HTTP to HTTPS.
+</p>
 
 <h2>Enhanced Code</h2>
 <pre>
@@ -12,10 +16,13 @@ PASTE YOUR HERE
 </pre>
 
 <h2>Skills Demonstrated</h2>
-<p>PASTE HERE</p>
+<p>This artifact demonstrates technical skills in secure software development practices, including vulnerability analysis and risk assessment. It also highlights the implementation of encryption techniques such as SHA-256 hashing and AES encryption to protect sensitive data. Additionally, this work reflects experience using security tools for dependency analysis, along with strong problem-solving and system evaluation skills. Overall, the artifact demonstrates the application of security principles in real-world scenarios to improve system reliability and data protection.</p>
 
 <h2>Alignment to Program Outcomes</h2>
-<p>PASTE HERE</p>
+<p>This artifact aligns with the program outcomes by demonstrating the application of problem-solving skills to identify and resolve security vulnerabilities that impact system users and organizational operations. It also reflects the ability to design and evaluate a computing solution with improved security architecture and effective risk mitigation strategies. Additionally, this work highlights the use of tools such as dependency-check and cryptographic libraries to analyze and improve software quality. The artifact further demonstrates the application of secure coding principles, including encryption methods and input validation techniques, to protect sensitive data. Finally, it showcases the ability to communicate technical findings and security improvements through clear, structured analysis and documentation.</p>
 
 <h2>Reflection</h2>
-<p>PASTE HERE</p>
+<p>Through this enhancement, I gained a deeper understanding of the importance of software security in application development. I learned that even systems that function correctly can contain critical vulnerabilities that expose users and organizations to risk.
+One challenge I encountered was ensuring that security improvements did not disrupt existing functionality. I addressed this by testing iteratively, researching best practices, and validating each change to maintain system stability.
+Additionally, implementing encryption and validation techniques helped me develop a stronger security mindset by anticipating potential threats and addressing them proactively. This experience strengthened my ability to evaluate systems, apply secure design principles, and implement meaningful improvements in real-world applications.
+</p>
