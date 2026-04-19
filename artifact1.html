@@ -1,28 +1,87 @@
-<h1>Software Design and Engineering Artifact</h1>
-
 <h2>Artifact Description</h2>
-<p>This artifact is the Grazioso Salvare Dashboard, a client/server web application developed in CS-340: Client/Server Development. The application analyzes and visualizes data from the Austin Animal Center Outcomes dataset to support animal rescue operations and assist stakeholders in making informed decisions about identifying dogs suitable for search-and-rescue training. Users can filter and analyze data based on attributes such as breed, age, and outcome type. The system was developed using Python, Dash, and Plotly for the frontend and visualization layers, while MongoDB served as the backend database. Additional tools such as Pandas were used for data manipulation, and PyMongo enabled integration between the application and the database.</p>
-
-<h2>Enhancements Implemented</h2>
-<p>The original application provided core functionality for filtering and visualizing data; however, improvements were needed to enhance maintainability, scalability, reliability, and usability for end users. To address these needs, I refactored large functions into modular components to improve code organization and maintainability and created a dedicated AnimalShelter.py class to centralize and manage database CRUD operations.
-I also added structured logging and improved error handling to support debugging and system monitoring. Input validation was implemented to ensure data integrity and prevent invalid or incomplete data from being processed. In addition, database interaction efficiency was enhanced by restructuring queries for improved performance, and filtered query methods were developed to support dynamic user input and enable real-time data retrieval.
-Further improvements included enhancing dynamic visualizations so that charts and maps update in real time based on user filters, as well as adding inline documentation and comments to improve readability and support future development.
-To support these improvements, the backend database layer was enhanced with validation, logging, and improved query functionality, as shown below:
+<p>
+This artifact is the Grazioso Salvare Dashboard, a client/server web application developed in CS-340. The application analyzes and visualizes data from the Austin Animal Center Outcomes dataset to support animal rescue operations and assist stakeholders in making informed decisions. Users can filter and analyze data based on breed, age, and outcome type. The system uses Python, Dash, and Plotly for the frontend, and MongoDB as the backend database.
 </p>
 
-<h2>Enhanced Code</h2>
-<pre>These enhancements significantly improved the system’s reliability, maintainability, and usability. Logging enables better monitoring and debugging, validation ensures data integrity and security, and filtered queries improve performance while supporting dynamic user interaction within the dashboard.
-A key design trade-off in this enhancement process was balancing performance optimization with code readability and maintainability. While more complex queries and tightly optimized logic could improve speed, I prioritized modular design and clear structure to ensure the system remains scalable and easier to maintain over time.
-Additionally, these improvements reflect a security-focused mindset by validating user inputs and reducing the risk of invalid or harmful data entering the system.
+<h2>Enhancements Implemented</h2>
+<p>
+The original application provided basic functionality but required improvements in maintainability, scalability, and reliability. To address this, I refactored large functions into modular components and created a dedicated AnimalShelter class to manage database operations.
+</p>
 
-</pre>
+<p>
+I implemented structured logging, improved error handling, and added input validation to ensure data integrity. Additionally, I enhanced database queries and introduced filtered query functionality to support dynamic user interaction and improve performance.
+</p>
+
+<h2>Enhanced Code (AnimalShelter.py)</h2>
+
+<pre><code>
+from pymongo import MongoClient
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+class AnimalShelter:
+
+    def __init__(self, username="aacuser", password="ChangeMe123"):
+        try:
+            self.client = MongoClient(
+                f"mongodb://{username}:{password}@localhost:27017/?authSource=admin"
+            )
+            self.database = self.client["aac"]
+            self.collection = self.database["animals"]
+
+            logging.info("MongoDB connected successfully!")
+
+        except Exception as e:
+            logging.error(f"Connection failed: {e}")
+
+    def validate_data(self, data):
+        if not data or not isinstance(data, dict):
+            raise ValueError("Invalid data")
+
+        if "animal_type" not in data or "breed" not in data:
+            raise ValueError("Missing required fields")
+
+        return True
+
+    def create(self, data):
+        try:
+            self.validate_data(data)
+            result = self.collection.insert_one(data)
+            logging.info("Insert successful")
+            return result.inserted_id
+        except Exception as e:
+            logging.error(f"Insert failed: {e}")
+            return None
+
+    def read_filtered(self, animal_type=None, breed=None):
+        query = {}
+
+        if animal_type:
+            query["animal_type"] = animal_type
+        if breed:
+            query["breed"] = breed
+
+        logging.info(f"Running query: {query}")
+        return list(self.collection.find(query))
+</code></pre>
+
+<h3>Code Explanation</h3>
+<p>
+These enhancements significantly improved system reliability, maintainability, and usability. Logging supports debugging and monitoring, validation ensures data integrity, and filtered queries improve performance while supporting dynamic user interaction. A key design trade-off involved balancing performance with readability and maintainability, ensuring the system remains scalable over time.
+</p>
 
 <h2>Skills Demonstrated</h2>
-<p>This artifact demonstrates technical skills in client/server architecture design and full-stack development using Python, Dash, and MongoDB. It also highlights experience with database integration and CRUD operations using PyMongo, as well as data analysis and visualization using Pandas and Plotly. In addition, the work reflects strong abilities in modular programming and code refactoring, along with the implementation of input validation and error handling. Overall, the artifact shows debugging skills and an understanding of event-driven programming in interactive applications.</p>
+<p>
+This artifact demonstrates skills in client/server architecture, full-stack development, database integration, and data visualization. It also highlights modular programming, input validation, error handling, and debugging within an interactive application.
+</p>
 
 <h2>Alignment to Program Outcomes</h2>
-<p>This artifact aligns program outcomes by demonstrating problem-solving skills in designing and improving a system that supports user interaction and decision-making. It reflects the ability to develop and evaluate a full-stack solution using tools such as Dash, MongoDB, and Python, while applying software engineering principles like modularity, scalability, and maintainability. It also demonstrates effective communication of technical concepts through structured code, documentation, and an interactive interface.</p>
+<p>
+This artifact demonstrates problem-solving skills in designing and improving a system that supports user interaction and decision-making. It reflects the ability to develop a full-stack solution using modern tools while applying software engineering principles such as modularity, scalability, and maintainability.
+</p>
 
 <h2>Reflection</h2>
-<p>Enhancing this artifact strengthened my understanding of how to design scalable and maintainable software systems. I learned the importance of separating concerns by modularizing code and centralizing database operations. One of the main challenges I encountered was debugging callback functions in Dash, which required a deeper understanding of event-driven programming and how user inputs trigger updates across the application.
-Additionally, improving database integration and implementing validation and logging mechanisms helped me better understand how backend systems interact with user interfaces in real time. Through iterative testing and debugging, I ensured that all components of the system worked together efficiently. This experience improved my ability to develop robust, user-focused applications and prepared me for real-world software development environments.</p>
+<p>
+Enhancing this artifact strengthened my understanding of scalable system design and modular architecture. I improved my ability to debug event-driven applications and integrate backend systems with user interfaces. This experience prepared me to build reliable, maintainable, and user-focused software systems.
+</p>
