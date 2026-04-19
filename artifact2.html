@@ -1,34 +1,74 @@
-<h1>Algorithms and Data Structure Artifact</h1>
+<h1>Algorithms and Data Structures Artifact</h1>
 
 <h2>Artifact Description</h2>
-<p>This artifact includes Project One and Project Two from CS 305, which focus on analyzing and improving the security of an existing software system. The original artifact involved identifying vulnerabilities within an application, while the enhanced version implemented solutions to address those weaknesses using secure coding practices and modern security tools.
-This artifact supports organizational decision-making by identifying risks that could impact system reliability, data integrity, and user trust, and by providing actionable improvements to mitigate those risks.
+<p>
+This artifact includes Project One and Project Two from CS 305, which focus on analyzing and improving the security of an existing software system. The original artifact involved identifying vulnerabilities within an application, while the enhanced version implemented solutions using secure coding practices and modern security tools. This artifact supports decision-making by identifying risks that impact system reliability, data integrity, and user trust.
 </p>
 
 <h2>Enhancements Implemented</h2>
-<p>The original system contained several critical vulnerabilities, including the lack of HTTPS communication, weak authentication mechanisms, insufficient input validation, and the absence of encryption. To enhance the artifact, I implemented multiple improvements to strengthen system security and reliability. These enhancements included configuring HTTPS using SSL certificates to secure data transmission, applying SHA-256 hashing and AES encryption to protect sensitive data, and improving input validation to prevent injection attacks and invalid data entry. I also updated outdated dependencies and utilized dependency-check tools to identify and address known vulnerabilities.
-In addition, I developed a Python-based security module to demonstrate the practical implementation of these improvements. This module incorporates hashing, encryption, and input validation, along with a simulation of secure communication to reflect the transition from HTTP to HTTPS.
+<p>
+The original system contained vulnerabilities such as lack of HTTPS communication, weak authentication, insufficient input validation, and absence of encryption. Enhancements included implementing SHA-256 hashing, AES encryption, improved input validation, and updating dependencies. A Python-based security module was developed to demonstrate these improvements in practice.
 </p>
 
-<h3>Code Implementation</h3>
+<h2>Enhanced Code</h2>
+
+<pre><code>
+import hashlib
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import pad, unpad
+
+def validate_user_input(data):
+    if not data:
+        raise ValueError("Input cannot be empty")
+    if len(data) > 100:
+        raise ValueError("Input too long")
+    return True
+
+def secure_hash(data):
+    validate_user_input(data)
+    return hashlib.sha256(data.encode()).hexdigest()
+
+def encrypt_sensitive_data(data):
+    validate_user_input(data)
+
+    key = get_random_bytes(16)
+    cipher = AES.new(key, AES.MODE_CBC)
+
+    encrypted = cipher.encrypt(pad(data.encode(), AES.block_size))
+    return key, cipher.iv, encrypted
+
+def decrypt_sensitive_data(key, iv, encrypted):
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    decrypted = unpad(cipher.decrypt(encrypted), AES.block_size)
+    return decrypted.decode()
+
+def secure_connection_demo():
+    print("Secure connection established using HTTPS protocol simulation.")
+</code></pre>
+
+<h3>Code Screenshots</h3>
+
 <img src="py1.jpg" width="700">
 <br><br>
-<img scr="py2.jpg" width="700">
+<img src="py2.jpg" width="700">
 
+<h3>Code Explanation</h3>
 <p>
-These enhancements significantly improved the system’s ability to securely handle user data, reduce vulnerabilities, and support safer interactions for end users. By implementing hashing, encryption, and validation, the system now protects sensitive information and reduces the risk of common attacks such as data exposure and injection vulnerabilities.
-A key design trade-off in this process was balancing strong security measures with system usability and performance. While encryption and validation increase protection, they can also introduce additional processing overhead. I addressed this by implementing efficient algorithms and limiting validation to essential fields to maintain system performance while improving security.
-
+These enhancements improved the system’s ability to securely handle user data and reduce vulnerabilities. Hashing, encryption, and validation protect sensitive information and reduce risks such as data exposure and injection attacks. A key trade-off involved balancing security with performance, which was addressed by using efficient algorithms and limiting validation to essential inputs.
 </p>
 
 <h2>Skills Demonstrated</h2>
-<p>This artifact demonstrates technical skills in secure software development practices, including vulnerability analysis and risk assessment. It also highlights the implementation of encryption techniques such as SHA-256 hashing and AES encryption to protect sensitive data. Additionally, this work reflects experience using security tools for dependency analysis, along with strong problem-solving and system evaluation skills. Overall, the artifact demonstrates the application of security principles in real-world scenarios to improve system reliability and data protection.</p>
+<p>
+This artifact demonstrates skills in secure software development, vulnerability analysis, encryption implementation, dependency analysis, and system evaluation. It reflects the application of security principles to improve system reliability and data protection.
+</p>
 
 <h2>Alignment to Program Outcomes</h2>
-<p>This artifact aligns with the program outcomes by demonstrating the application of problem-solving skills to identify and resolve security vulnerabilities that impact system users and organizational operations. It also reflects the ability to design and evaluate a computing solution with improved security architecture and effective risk mitigation strategies. Additionally, this work highlights the use of tools such as dependency-check and cryptographic libraries to analyze and improve software quality. The artifact further demonstrates the application of secure coding principles, including encryption methods and input validation techniques, to protect sensitive data. Finally, it showcases the ability to communicate technical findings and security improvements through clear, structured analysis and documentation.</p>
+<p>
+This artifact demonstrates problem-solving skills in identifying and resolving vulnerabilities, designing secure systems, using modern tools, and applying encryption and validation techniques. It also shows the ability to communicate technical improvements clearly.
+</p>
 
 <h2>Reflection</h2>
-<p>Through this enhancement, I gained a deeper understanding of the importance of software security in application development. I learned that even systems that function correctly can contain critical vulnerabilities that expose users and organizations to risk.
-One challenge I encountered was ensuring that security improvements did not disrupt existing functionality. I addressed this by testing iteratively, researching best practices, and validating each change to maintain system stability.
-Additionally, implementing encryption and validation techniques helped me develop a stronger security mindset by anticipating potential threats and addressing them proactively. This experience strengthened my ability to evaluate systems, apply secure design principles, and implement meaningful improvements in real-world applications.
+<p>
+This enhancement improved my understanding of software security and the importance of protecting user data. I learned how to implement encryption and validation without disrupting system functionality. This experience strengthened my ability to apply secure design principles and improve real-world applications.
 </p>
